@@ -1,0 +1,54 @@
+﻿@model IEnumerable<clientApp.Models.Client>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (ViewBag.Message != "") { 
+<div class="alert alert-primary" role="alert">
+    @ViewBag.Message
+</div>
+}
+
+
+<h3>Index</h3>
+
+<p>
+    <button type="button" class="btn btn-light"><a asp-action="Create">Create New</a></button>  
+</p>
+<div class="container-fluid">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td scope="row">
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+    </div>
