@@ -15,13 +15,13 @@ namespace clientApp.Prodivers
     public class ClientsProvider : IClientProvider
     {
         private readonly ClinentContext DbContext;
-        private readonly ILogger<ClientsProvider> ILogger;
+        private readonly ILogger<ClientsProvider> Logger;
      //   private readonly IMapper mapper;
 
         public ClientsProvider(ClinentContext dbContext, ILogger<ClientsProvider> Logger)
         {
             this.DbContext = dbContext;
-            this.ILogger = Logger;
+            this.Logger = Logger;
            
 
 
@@ -56,7 +56,7 @@ namespace clientApp.Prodivers
             }
             catch (Exception ex)
             {
-                ILogger?.LogError(ex.ToString());
+                Logger?.LogError(ex.ToString());
                 return (false, null, ex.Message);
             }
         }
@@ -77,7 +77,7 @@ namespace clientApp.Prodivers
             }
             catch (Exception ex)
             {
-                ILogger?.LogError(ex.ToString());
+                Logger?.LogError(ex.ToString());
                 return (false, null, ex.Message);
             }
         }
@@ -102,7 +102,8 @@ namespace clientApp.Prodivers
             }
             clients.FirstName = client.FirstName;
             clients.LastName = client.LastName;
-            DbContext.Client.Update(clients);
+            clients.Email = client.Email;
+           DbContext.Client.Update(clients);
             var result = await DbContext.SaveChangesAsync();
 
             return (result > 0, Id, "Updated Successfully");
